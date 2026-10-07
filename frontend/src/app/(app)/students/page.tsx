@@ -19,10 +19,10 @@ export default function StudentsPage() {
   return (
     <div className="mx-auto max-w-6xl">
       <header className="mb-8">
-        <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-white">
+        <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-foreground">
           <Users className="h-7 w-7 text-indigo-400" /> Students
         </h1>
-        <p className="mt-1 text-sm text-slate-400">All students enrolled across your courses.</p>
+        <p className="mt-1 text-sm text-muted">All students enrolled across your courses.</p>
       </header>
 
       {error && (
@@ -32,32 +32,32 @@ export default function StudentsPage() {
       )}
 
       {students && (
-        <div className="overflow-hidden rounded-2xl border border-white/5">
+        <div className="overflow-hidden rounded-2xl border border-border">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-900/80 text-xs tracking-wide text-slate-500 uppercase">
+            <thead className="bg-surface text-xs text-foreground/80">
               <tr>
-                <th className="px-5 py-3.5 font-medium">Name</th>
-                <th className="px-5 py-3.5 font-medium">Enrollment No.</th>
-                <th className="px-5 py-3.5 font-medium">Major</th>
-                <th className="px-5 py-3.5 font-medium">Email</th>
+                <th className="border-b-2 border-accent-blue px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Name</th>
+                <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Enrollment No.</th>
+                <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Major</th>
+                <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Email</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 bg-slate-900/40">
+            <tbody className="divide-y divide-border bg-surface">
               {students.map((s) => (
-                <tr key={s.id} className="transition hover:bg-white/[0.03]">
-                  <td className="px-5 py-3.5 font-medium text-white">{s.name}</td>
+                <tr key={s.id} className="transition hover:bg-surface-2/60">
+                  <td className="px-5 py-3.5 font-medium text-foreground">{s.name}</td>
                   <td className="px-5 py-3.5">
                     <span className="rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-semibold text-indigo-300">
                       {s.enrollment_no}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5 text-slate-300">{s.major}</td>
-                  <td className="px-5 py-3.5 text-slate-500">{s.email}</td>
+                  <td className="px-5 py-3.5 text-faint">{s.major}</td>
+                  <td className="px-5 py-3.5 text-faint">{s.email}</td>
                 </tr>
               ))}
               {students.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-5 py-6 text-center text-slate-500">
+                  <td colSpan={4} className="px-5 py-6 text-center text-faint">
                     No students found.
                   </td>
                 </tr>
@@ -68,7 +68,7 @@ export default function StudentsPage() {
       )}
 
       {role === "faculty" && (
-        <p className="mt-4 flex items-center gap-1.5 text-xs text-slate-500">
+        <p className="mt-4 flex items-center gap-1.5 text-xs text-faint">
           <UserPlus className="h-3.5 w-3.5" /> Use “Add New Student” on the dashboard to enroll someone new.
         </p>
       )}

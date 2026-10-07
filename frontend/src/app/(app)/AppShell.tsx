@@ -27,14 +27,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#05070f]">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-500/30 border-t-indigo-400" />
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#05070f]">
+    <div className="flex min-h-screen flex-col bg-background">
       <Sidebar
         user={user}
         pathname={pathname}
@@ -42,14 +42,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         onToggle={() => setCollapsed((c) => !c)}
         onLogout={handleLogout}
       />
-      {/* Main workspace expands as the sidebar collapses (smooth transition). */}
+      {/* Main workspace sits under the fixed header; expands as the sidebar collapses. */}
       <main
-        className={`min-h-screen p-8 transition-all duration-300 ease-in-out ${
+        className={`flex-1 p-8 pt-[5.5rem] transition-all duration-300 ease-in-out ${
           collapsed ? "ml-[4.5rem]" : "ml-64"
         }`}
       >
         {children}
       </main>
+      {/* Portal-style centered footer */}
+      <footer
+        className={`py-4 text-center text-xs text-muted transition-all duration-300 ease-in-out ${
+          collapsed ? "ml-[4.5rem]" : "ml-64"
+        }`}
+      >
+        © {new Date().getFullYear()} ATOOL. All Rights Reserved.
+      </footer>
     </div>
   );
 }

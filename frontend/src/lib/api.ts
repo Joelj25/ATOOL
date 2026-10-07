@@ -175,10 +175,19 @@ export interface ChatMessage {
   text: string;
 }
 
-export function sendChat(message: string): Promise<{ reply: string }> {
+/** Conversation context sent to the backend (OpenAI-compatible roles). */
+export interface ChatHistoryItem {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export function sendChat(
+  message: string,
+  history: ChatHistoryItem[] = [],
+): Promise<{ reply: string }> {
   return request("/api/chat", {
     method: "POST",
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ message, history }),
   });
 }
 

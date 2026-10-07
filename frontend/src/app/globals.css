@@ -1,8 +1,74 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: night mode is <html class="dark">. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens — DAY (default) and NIGHT (.dark) palettes.
+   Day mirrors a clean academic-portal look: soft gray page, white
+   cards, blue/red table-header accents. Night preserves the original
+   deep-space dashboard palette.
+   ------------------------------------------------------------------ */
 :root {
+  color-scheme: light;
+
+  --background: #f1f2f6; /* page */
+  --surface: #ffffff; /* cards, sidebar, tables */
+  --surface-2: #eef2f7; /* table heads, tab rails, nested chips */
+  --input: #ffffff;
+  --border: #e2e8f0;
+
+  --foreground: #1e293b;
+  --muted: #64748b;
+  --faint: #94a3b8;
+
+  --accent: #4f46e5; /* indigo brand */
+  --accent-blue: #2563eb; /* table-header underline 1 */
+  --accent-red: #dc2626; /* table-header underline 2 */
+
+  --success: #059669;
+  --warning: #b45309;
+  --danger: #dc2626;
+}
+
+.dark {
+  color-scheme: dark;
+
   --background: #05070f;
+  --surface: #0c1424;
+  --surface-2: #16213a;
+  --input: #1b2942;
+  --border: rgba(148, 163, 184, 0.14);
+
   --foreground: #e2e8f0;
+  --muted: #94a3b8;
+  --faint: #64748b;
+
+  --accent: #818cf8;
+  --accent-blue: #60a5fa;
+  --accent-red: #f87171;
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+}
+
+/* Expose tokens as Tailwind utilities: bg-surface, text-muted, border-border… */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-red: var(--accent-red);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
 }
 
 body {
@@ -17,6 +83,9 @@ body {
     "Helvetica Neue",
     Arial,
     sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Subtle purple glow gradient used behind the auth screen and hero cards */
@@ -27,7 +96,7 @@ body {
     radial-gradient(40% 40% at 50% 90%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
 }
 
-/* Slim dark scrollbars */
+/* Scrollbars follow the active palette */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -42,7 +111,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(99, 102, 241, 0.45);
 }
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.35);
+}
 
 ::selection {
+  background: rgba(99, 102, 241, 0.2);
+}
+.dark ::selection {
   background: rgba(139, 92, 246, 0.4);
 }

@@ -41,13 +41,13 @@ export default function StudentDashboard() {
 
   if (offline) {
     return (
-      <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
-        <p className="flex items-center gap-2 text-sm font-medium text-amber-300">
+      <div className="rounded-2xl border border-warning/25 bg-warning/5 p-6">
+        <p className="flex items-center gap-2 text-sm font-medium text-warning">
           <AlertTriangle className="h-4 w-4" /> Backend not reachable
         </p>
-        <p className="mt-2 text-xs text-slate-400">
-          Start it with <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">uvicorn main:app --port 8000</code>{" "}
-          inside <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">backend/</code>, then refresh.
+        <p className="mt-2 text-xs text-muted">
+          Start it with <code className="rounded bg-surface-2 px-1.5 py-0.5 text-foreground">uvicorn main:app --port 8000</code>{" "}
+          inside <code className="rounded bg-surface-2 px-1.5 py-0.5 text-foreground">backend/</code>, then refresh.
         </p>
       </div>
     );
@@ -61,10 +61,10 @@ export default function StudentDashboard() {
     <div className="mx-auto max-w-6xl">
       {/* Welcome header */}
       <header className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Welcome back, {student.name.split(" ")[0]}
         </h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-muted">
           {student.enrollment_no} · {student.major}
         </p>
       </header>
@@ -74,21 +74,21 @@ export default function StudentDashboard() {
         <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <MetricCard
             icon={<BookOpenCheck className="h-5 w-5" />}
-            tint="from-emerald-500/20 to-emerald-500/5 text-emerald-400"
+            tint="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400"
             label="My Attendance"
             value={`${att.percentage}%`}
             sub={`${att.present}/${att.total} classes · ${att.trend}`}
           />
           <MetricCard
             icon={<ClipboardList className="h-5 w-5" />}
-            tint="from-amber-500/20 to-amber-500/5 text-amber-400"
+            tint="bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400"
             label="Upcoming Assignments"
             value={`${data.upcoming_assignments.length}`}
             sub={data.upcoming_assignments[0] ? `Next: ${data.upcoming_assignments[0].title}` : "Nothing due 🎉"}
           />
           <MetricCard
             icon={<PenLine className="h-5 w-5" />}
-            tint="from-indigo-500/20 to-indigo-500/5 text-indigo-400"
+            tint="bg-indigo-100 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-400"
             label="Upcoming Tests"
             value={`${data.upcoming_tests.length}`}
             sub={data.upcoming_tests[0] ? `Next: ${data.upcoming_tests[0].title}` : "None scheduled"}
@@ -100,7 +100,7 @@ export default function StudentDashboard() {
           <section className="lg:col-span-3 space-y-6">
             {/* Tabbed lists: courses / assignments / tests */}
             <div>
-              <div className="mb-3 flex gap-1 rounded-lg bg-slate-900/60 p-1 text-sm font-medium w-fit">
+              <div className="mb-3 flex gap-1 rounded-lg bg-surface-2 p-1 text-sm font-medium w-fit">
                 {(
                   [
                     ["courses", "My Courses"],
@@ -112,7 +112,7 @@ export default function StudentDashboard() {
                     key={key}
                     onClick={() => setTab(key)}
                     className={`rounded-md px-3 py-1.5 transition ${
-                      tab === key ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-slate-200"
+                      tab === key ? "bg-accent text-white shadow-sm" : "text-muted hover:text-foreground"
                     }`}
                   >
                     {label}
@@ -132,19 +132,19 @@ export default function StudentDashboard() {
           {/* Right column: per-course attendance bars */}
           <section className="space-y-6 lg:col-span-2">
             <div>
-              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-300">
-                <BookOpenCheck className="h-4 w-4 text-emerald-400" /> Attendance by Course
+              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground/80">
+                <BookOpenCheck className="h-4 w-4 text-success" /> Attendance by Course
               </h2>
-              <div className="space-y-3 rounded-xl border border-white/5 bg-slate-900/50 p-4">
+              <div className="space-y-3 rounded-xl border border-border bg-surface p-4">
                 {data.courses.map((c) => (
                   <div key={c.course_id}>
                     <div className="mb-1 flex items-center justify-between text-xs">
-                      <span className="font-medium text-slate-300">{c.course_code}</span>
-                      <span className={c.percentage >= 75 ? "text-emerald-400" : "text-red-400"}>
+                      <span className="font-medium text-foreground/80">{c.course_code}</span>
+                      <span className={c.percentage >= 75 ? "text-success" : "text-danger"}>
                         {c.percentage}%
                       </span>
                     </div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-800">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-surface-2">
                       <div
                         className={`h-full rounded-full ${
                           c.percentage >= 75
@@ -157,7 +157,7 @@ export default function StudentDashboard() {
                   </div>
                 ))}
                 {data.courses.length === 0 && (
-                  <p className="text-xs text-slate-500">No attendance recorded yet.</p>
+                  <p className="text-xs text-faint">No attendance recorded yet.</p>
                 )}
               </div>
             </div>
@@ -170,31 +170,44 @@ export default function StudentDashboard() {
   );
 }
 
+/** Portal-style header: blue underline on the first column, red on the rest. */
+function Th({ children, first = false }: { children: React.ReactNode; first?: boolean }) {
+  return (
+    <th
+      className={`border-b-2 px-5 py-3 text-left text-xs font-semibold tracking-wide text-foreground/80 ${
+        first ? "border-accent-blue" : "border-accent-red"
+      }`}
+    >
+      {children}
+    </th>
+  );
+}
+
 function CoursesTable({ courses }: { courses: StudentDashboardData["courses"] }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/5">
+    <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
       <table className="w-full text-left text-sm">
-        <thead className="bg-slate-900/80 text-xs tracking-wide text-slate-500 uppercase">
+        <thead className="bg-surface">
           <tr>
-            <th className="px-5 py-3.5 font-medium">Code</th>
-            <th className="px-5 py-3.5 font-medium">Course</th>
-            <th className="px-5 py-3.5 font-medium">Attendance</th>
+            <Th first>Code</Th>
+            <Th>Course</Th>
+            <Th>Attendance</Th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/5 bg-slate-900/40">
+        <tbody className="divide-y divide-border">
           {courses.map((c) => (
-            <tr key={c.course_id} className="transition hover:bg-white/[0.03]">
+            <tr key={c.course_id} className="transition hover:bg-surface-2/60">
               <td className="px-5 py-3.5">
-                <span className="rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-semibold text-indigo-300">
+                <span className="rounded-md bg-accent/10 px-2 py-1 text-xs font-semibold text-accent">
                   {c.course_code}
                 </span>
               </td>
-              <td className="px-5 py-3.5 font-medium text-white">{c.course_name}</td>
+              <td className="px-5 py-3.5 font-medium text-foreground">{c.course_name}</td>
               <td className="px-5 py-3.5">
-                <span className={c.percentage >= 75 ? "font-semibold text-emerald-400" : "font-semibold text-red-400"}>
+                <span className={c.percentage >= 75 ? "font-semibold text-success" : "font-semibold text-danger"}>
                   {c.percentage}%
                 </span>
-                <span className="ml-2 text-xs text-slate-500">
+                <span className="ml-2 text-xs text-faint">
                   ({c.present}/{c.total})
                 </span>
               </td>
@@ -202,7 +215,7 @@ function CoursesTable({ courses }: { courses: StudentDashboardData["courses"] })
           ))}
           {courses.length === 0 && (
             <tr>
-              <td colSpan={3} className="px-5 py-6 text-center text-slate-500">
+              <td colSpan={3} className="px-5 py-6 text-center text-faint">
                 No attendance records yet.
               </td>
             </tr>
@@ -220,14 +233,14 @@ function AssignmentsList({ items }: { items: StudentDashboardData["upcoming_assi
   return (
     <div className="space-y-2.5">
       {items.map((a) => (
-        <div key={a.id} className="rounded-xl border border-white/5 bg-slate-900/50 p-4">
+        <div key={a.id} className="rounded-xl border border-border bg-surface p-4 shadow-sm">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-white">{a.title}</p>
-              <p className="text-[11px] text-slate-500">{a.course_code} · {a.course_name}</p>
-              {a.description && <p className="mt-1 line-clamp-2 text-xs text-slate-500">{a.description}</p>}
+              <p className="truncate text-sm font-medium text-foreground">{a.title}</p>
+              <p className="text-[11px] text-faint">{a.course_code} · {a.course_name}</p>
+              {a.description && <p className="mt-1 line-clamp-2 text-xs text-muted">{a.description}</p>}
             </div>
-            <span className="shrink-0 rounded-lg bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-400">
+            <span className="shrink-0 rounded-lg bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-600 dark:bg-amber-500/10 dark:text-amber-400">
               due {fmtDate(a.due_date)}
             </span>
           </div>
@@ -244,12 +257,12 @@ function TestsList({ items }: { items: StudentDashboardData["upcoming_tests"] })
   return (
     <div className="space-y-2.5">
       {items.map((t) => (
-        <div key={t.id} className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-900/50 p-4">
+        <div key={t.id} className="flex items-center justify-between rounded-xl border border-border bg-surface p-4 shadow-sm">
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-white">{t.title}</p>
-            <p className="text-[11px] text-slate-500">{t.course_code} · {t.course_name}</p>
+            <p className="truncate text-sm font-medium text-foreground">{t.title}</p>
+            <p className="text-[11px] text-faint">{t.course_code} · {t.course_name}</p>
           </div>
-          <span className="ml-3 shrink-0 rounded-lg bg-red-500/10 px-2.5 py-1 text-[11px] font-semibold text-red-400">
+          <span className="ml-3 shrink-0 rounded-lg bg-red-100 px-2.5 py-1 text-[11px] font-semibold text-red-600 dark:bg-red-500/10 dark:text-red-400">
             {fmtDate(t.test_date)} · {t.total_marks} marks
           </span>
         </div>
@@ -270,13 +283,13 @@ function TimetableCard({ slots }: { slots: TimetableSlot[] }) {
 
   return (
     <div>
-      <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-300">
-        <CalendarClock className="h-4 w-4 text-indigo-400" /> Week Ahead
+      <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground/80">
+        <CalendarClock className="h-4 w-4 text-accent" /> Week Ahead
       </h2>
       <div className="space-y-2.5">
         {grouped.map(([day, daySlots]) => (
           <div key={day}>
-            <p className="mb-1.5 text-[11px] font-semibold tracking-wide text-slate-500 uppercase">
+            <p className="mb-1.5 text-[11px] font-semibold tracking-wide text-faint uppercase">
               {fmtDate(day, { weekday: "short", month: "short", day: "numeric" })}
             </p>
             <div className="space-y-2">
@@ -287,7 +300,7 @@ function TimetableCard({ slots }: { slots: TimetableSlot[] }) {
           </div>
         ))}
         {slots.length === 0 && (
-          <p className="rounded-xl border border-white/5 bg-slate-900/50 p-4 text-sm text-slate-500">
+          <p className="rounded-xl border border-border bg-surface p-4 text-sm text-faint">
             No classes scheduled this week.
           </p>
         )}
@@ -298,15 +311,15 @@ function TimetableCard({ slots }: { slots: TimetableSlot[] }) {
 
 function SlotRow({ slot }: { slot: TimetableSlot }) {
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-white/5 bg-slate-900/50 p-3.5 transition hover:border-indigo-500/30">
+    <div className="flex items-center gap-4 rounded-xl border border-border bg-surface p-3.5 shadow-sm transition hover:border-accent/40">
       <div className="w-20 shrink-0 text-right">
-        <p className="text-sm font-semibold text-white">{slot.start_time}</p>
-        <p className="text-[10px] text-slate-500">{slot.end_time}</p>
+        <p className="text-sm font-semibold text-foreground">{slot.start_time}</p>
+        <p className="text-[10px] text-faint">{slot.end_time}</p>
       </div>
-      <div className="h-10 w-px bg-gradient-to-b from-indigo-500/50 to-purple-500/20" />
+      <div className="h-10 w-px bg-gradient-to-b from-indigo-500/60 to-purple-500/20" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white">{slot.course_name}</p>
-        <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-slate-500">
+        <p className="truncate text-sm font-medium text-foreground">{slot.course_name}</p>
+        <p className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-faint">
           <span className="flex items-center gap-1">
             <MapPin className="h-3 w-3" /> {slot.room}
           </span>
@@ -317,7 +330,9 @@ function SlotRow({ slot }: { slot: TimetableSlot }) {
       </div>
       <span
         className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${
-          slot.status === "completed" ? "bg-slate-500/10 text-slate-400" : "bg-emerald-500/10 text-emerald-400"
+          slot.status === "completed"
+            ? "bg-surface-2 text-muted"
+            : "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"
         }`}
       >
         {slot.status}
@@ -328,8 +343,8 @@ function SlotRow({ slot }: { slot: TimetableSlot }) {
 
 function EmptyList({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <p className="flex items-center gap-2 rounded-xl border border-white/5 bg-slate-900/50 p-5 text-sm text-slate-400">
-      <span className="text-slate-500">{icon}</span> {text}
+    <p className="flex items-center gap-2 rounded-xl border border-border bg-surface p-5 text-sm text-muted">
+      <span className="text-faint">{icon}</span> {text}
     </p>
   );
 }
@@ -348,13 +363,13 @@ function MetricCard({
   sub: string;
 }) {
   return (
-    <div className="group rounded-2xl border border-white/5 bg-slate-900/50 p-5 transition hover:border-indigo-500/30 hover:bg-slate-900/80">
+    <div className="group rounded-2xl border border-border bg-surface p-5 shadow-sm transition hover:border-accent/40">
       <div className="flex items-start justify-between">
-        <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">{label}</p>
-        <span className={`rounded-lg bg-gradient-to-br p-2 ${tint}`}>{icon}</span>
+        <p className="text-xs font-medium tracking-wide text-faint uppercase">{label}</p>
+        <span className={`rounded-lg p-2 ${tint}`}>{icon}</span>
       </div>
-      <p className="mt-3 truncate text-2xl font-bold text-white">{value}</p>
-      <p className="mt-1 line-clamp-2 text-xs text-slate-500">{sub}</p>
+      <p className="mt-3 truncate text-2xl font-bold text-foreground">{value}</p>
+      <p className="mt-1 line-clamp-2 text-xs text-faint">{sub}</p>
     </div>
   );
 }
@@ -371,14 +386,14 @@ function SkeletonGrid() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="h-32 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40" />
+          <div key={i} className="h-32 animate-pulse rounded-2xl border border-border bg-surface-2" />
         ))}
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="h-72 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40 lg:col-span-3" />
-        <div className="h-72 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40 lg:col-span-2" />
+        <div className="h-72 animate-pulse rounded-2xl border border-border bg-surface-2 lg:col-span-3" />
+        <div className="h-72 animate-pulse rounded-2xl border border-border bg-surface-2 lg:col-span-2" />
       </div>
-      <p className="flex items-center gap-2 text-xs text-slate-500">
+      <p className="flex items-center gap-2 text-xs text-faint">
         <RefreshCw className="h-3 w-3 animate-spin" /> Loading your dashboard…
       </p>
     </div>

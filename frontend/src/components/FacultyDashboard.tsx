@@ -57,13 +57,13 @@ export default function FacultyDashboard() {
 
   if (offline) {
     return (
-      <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
-        <p className="flex items-center gap-2 text-sm font-medium text-amber-300">
+      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-500/20 dark:bg-amber-500/5">
+        <p className="flex items-center gap-2 text-sm font-medium text-amber-700 dark:text-amber-300">
           <AlertTriangle className="h-4 w-4" /> Backend not reachable
         </p>
-        <p className="mt-2 text-xs text-slate-400">
-          Start it with <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">uvicorn main:app --port 8000</code>{" "}
-          inside <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-300">backend/</code>, then refresh.
+        <p className="mt-2 text-xs text-muted">
+          Start it with <code className="rounded bg-surface-2 px-1.5 py-0.5 text-foreground/80">uvicorn main:app --port 8000</code>{" "}
+          inside <code className="rounded bg-surface-2 px-1.5 py-0.5 text-foreground/80">backend/</code>, then refresh.
         </p>
       </div>
     );
@@ -75,13 +75,13 @@ export default function FacultyDashboard() {
     <div className="mx-auto max-w-6xl">
       <header className="mb-8 flex items-end justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Welcome, {data.faculty.name}</h1>
-          <p className="mt-1 text-sm text-slate-400">{data.faculty.department} Department</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome, {data.faculty.name}</h1>
+          <p className="mt-1 text-sm text-muted">{data.faculty.department} Department</p>
         </div>
         <button
           onClick={refresh}
           title="Refresh"
-          className="rounded-lg border border-white/10 bg-slate-900/60 p-2.5 text-slate-400 transition hover:text-indigo-300"
+          className="rounded-lg border border-border bg-surface p-2.5 text-muted transition hover:text-accent"
         >
           <RefreshCw className="h-4 w-4" />
         </button>
@@ -90,10 +90,10 @@ export default function FacultyDashboard() {
       <div className="space-y-6">
         {/* Totals */}
         <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatCard icon={<Layers className="h-5 w-5" />} tint="from-indigo-500/20 to-indigo-500/5 text-indigo-400" label="My Courses" value={data.totals.courses} />
-          <StatCard icon={<Users className="h-5 w-5" />} tint="from-emerald-500/20 to-emerald-500/5 text-emerald-400" label="Total Students" value={data.totals.students} />
-          <StatCard icon={<ClipboardList className="h-5 w-5" />} tint="from-amber-500/20 to-amber-500/5 text-amber-400" label="Assignments" value={data.totals.assignments} />
-          <StatCard icon={<PenLine className="h-5 w-5" />} tint="from-purple-500/20 to-purple-500/5 text-purple-400" label="Tests" value={data.totals.tests} />
+          <StatCard icon={<Layers className="h-5 w-5" />} tint="bg-indigo-100 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-400" label="My Courses" value={data.totals.courses} />
+          <StatCard icon={<Users className="h-5 w-5" />} tint="bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400" label="Total Students" value={data.totals.students} />
+          <StatCard icon={<ClipboardList className="h-5 w-5" />} tint="bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400" label="Assignments" value={data.totals.assignments} />
+          <StatCard icon={<PenLine className="h-5 w-5" />} tint="bg-purple-100 text-purple-600 dark:bg-purple-500/15 dark:text-purple-400" label="Tests" value={data.totals.tests} />
         </section>
 
         {/* Quick actions */}
@@ -121,30 +121,30 @@ export default function FacultyDashboard() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           {/* Course stats table */}
           <section className="lg:col-span-3">
-            <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-300">
+            <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground/80">
               <GraduationCap className="h-4 w-4 text-indigo-400" /> My Courses
             </h2>
-            <div className="overflow-hidden rounded-2xl border border-white/5">
+            <div className="overflow-hidden rounded-2xl border border-border">
               <table className="w-full text-left text-sm">
-                <thead className="bg-slate-900/80 text-xs tracking-wide text-slate-500 uppercase">
+                <thead className="bg-surface text-xs text-foreground/80">
                   <tr>
-                    <th className="px-5 py-3.5 font-medium">Course</th>
-                    <th className="px-5 py-3.5 font-medium">Students</th>
-                    <th className="px-5 py-3.5 font-medium">Avg. Attendance</th>
-                    <th className="px-5 py-3.5 font-medium">Work</th>
+                    <th className="border-b-2 border-accent-blue px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Course</th>
+                    <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Students</th>
+                    <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Avg. Attendance</th>
+                    <th className="border-b-2 border-accent-red px-5 py-3.5 text-left text-xs font-semibold text-foreground/80">Work</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 bg-slate-900/40">
+                <tbody className="divide-y divide-border bg-surface">
                   {data.courses.map((c) => (
-                    <tr key={c.course_id} className="transition hover:bg-white/[0.03]">
+                    <tr key={c.course_id} className="transition hover:bg-surface-2/60">
                       <td className="px-5 py-3.5">
-                        <p className="font-medium text-white">{c.course_code}</p>
-                        <p className="text-xs text-slate-500">{c.course_name}</p>
+                        <p className="font-medium text-foreground">{c.course_code}</p>
+                        <p className="text-xs text-faint">{c.course_name}</p>
                       </td>
-                      <td className="px-5 py-3.5 text-slate-300">{c.students}</td>
+                      <td className="px-5 py-3.5 text-foreground/80">{c.students}</td>
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-2">
-                          <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-800">
+                          <div className="h-1.5 w-16 overflow-hidden rounded-full bg-surface-2">
                             <div
                               className={`h-full rounded-full ${
                                 c.avg_attendance >= 75
@@ -154,19 +154,19 @@ export default function FacultyDashboard() {
                               style={{ width: `${c.avg_attendance}%` }}
                             />
                           </div>
-                          <span className={c.avg_attendance >= 75 ? "text-xs font-semibold text-emerald-400" : "text-xs font-semibold text-red-400"}>
+                          <span className={c.avg_attendance >= 75 ? "text-xs font-semibold text-emerald-600 dark:text-emerald-400" : "text-xs font-semibold text-red-600 dark:text-red-400"}>
                             {c.avg_attendance}%
                           </span>
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 text-xs text-slate-400">
+                      <td className="px-5 py-3.5 text-xs text-muted">
                         {c.assignments} asgmt · {c.tests} tests
                       </td>
                     </tr>
                   ))}
                   {data.courses.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="px-5 py-6 text-center text-slate-500">
+                      <td colSpan={4} className="px-5 py-6 text-center text-faint">
                         No courses assigned to you yet.
                       </td>
                     </tr>
@@ -179,23 +179,23 @@ export default function FacultyDashboard() {
           {/* Right rail: upcoming + recent attendance */}
           <section className="space-y-6 lg:col-span-2">
             <div>
-              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-300">
+              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground/80">
                 <CalendarClock className="h-4 w-4 text-amber-400" /> Upcoming Deadlines
               </h2>
               <div className="space-y-2.5">
                 {data.upcoming.map((u, i) => (
-                  <div key={i} className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-900/50 p-4">
+                  <div key={i} className="flex items-center justify-between rounded-xl border border-border bg-surface p-4">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-white">{u.title}</p>
-                      <p className="text-[11px] capitalize text-slate-500">{u.kind} · {u.course_code}</p>
+                      <p className="truncate text-sm font-medium text-foreground">{u.title}</p>
+                      <p className="text-[11px] capitalize text-faint">{u.kind} · {u.course_code}</p>
                     </div>
-                    <span className="ml-3 shrink-0 rounded-lg bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-400">
+                    <span className="ml-3 shrink-0 rounded-lg bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">
                       {fmtDate(u.date)}
                     </span>
                   </div>
                 ))}
                 {data.upcoming.length === 0 && (
-                  <p className="rounded-xl border border-white/5 bg-slate-900/50 p-4 text-sm text-slate-500">
+                  <p className="rounded-xl border border-border bg-surface p-4 text-sm text-faint">
                     Nothing scheduled ahead.
                   </p>
                 )}
@@ -203,22 +203,22 @@ export default function FacultyDashboard() {
             </div>
 
             <div>
-              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-300">
-                <BookOpenCheck className="h-4 w-4 text-emerald-400" /> Recent Attendance
+              <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground/80">
+                <BookOpenCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" /> Recent Attendance
               </h2>
               <div className="space-y-2.5">
                 {data.recent_attendance.map((r, i) => (
-                  <div key={i} className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-900/50 px-4 py-3">
+                  <div key={i} className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-3">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-white">{r.student_name}</p>
-                      <p className="text-[11px] text-slate-500">{r.course_code} · {fmtDate(r.date)}</p>
+                      <p className="truncate text-sm font-medium text-foreground">{r.student_name}</p>
+                      <p className="text-[11px] text-faint">{r.course_code} · {fmtDate(r.date)}</p>
                     </div>
                     {r.status === "present" ? (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-400">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
                         <CheckCircle2 className="h-3.5 w-3.5" /> Present
                       </span>
                     ) : (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-red-500/10 px-2.5 py-1 text-xs font-medium text-red-400">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-500/10 dark:text-red-400">
                         <XCircle className="h-3.5 w-3.5" /> Absent
                       </span>
                     )}
@@ -277,12 +277,12 @@ function ModalShell({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl shadow-black/50"
+        className="w-full max-w-md rounded-2xl border border-border bg-surface p-6 shadow-2xl shadow-black/50"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-5 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-          <button onClick={onClose} className="rounded-lg p-1.5 text-slate-500 transition hover:bg-white/5 hover:text-slate-200">
+          <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+          <button onClick={onClose} className="rounded-lg p-1.5 text-faint transition hover:bg-foreground/5 hover:text-foreground">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -295,14 +295,14 @@ function ModalShell({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium text-slate-400">{label}</label>
+      <label className="mb-1.5 block text-xs font-medium text-muted">{label}</label>
       {children}
     </div>
   );
 }
 
 const inputCls =
-  "w-full rounded-lg border border-white/10 bg-slate-800/70 px-3 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30";
+  "w-full rounded-lg border border-border bg-input px-3 py-2.5 text-sm text-foreground placeholder-faint outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30";
 
 function AddStudentModal({
   onClose,
@@ -349,10 +349,10 @@ function AddStudentModal({
             <input value={major} onChange={(e) => setMajor(e.target.value)} className={inputCls} />
           </Field>
         </div>
-        <p className="rounded-lg border border-white/5 bg-slate-800/50 px-3 py-2 text-[11px] text-slate-500">
-          The student&apos;s initial password is <span className="font-semibold text-slate-300">password123</span> — ask them to change it later.
+        <p className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-[11px] text-faint">
+          The student&apos;s initial password is <span className="font-semibold text-foreground/80">password123</span> — ask them to change it later.
         </p>
-        {error && <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>}
+        {error && <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-600 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">{error}</p>}
         <SubmitButton busy={busy} label="Create student" />
       </form>
     </ModalShell>
@@ -437,7 +437,7 @@ function MarkAttendanceModal({
         </Field>
         <Field label="Status">
           {/* Present / Absent toggle */}
-          <div className="grid grid-cols-2 gap-1 rounded-lg bg-slate-800/70 p-1">
+          <div className="grid grid-cols-2 gap-1 rounded-lg bg-input p-1">
             {(["present", "absent"] as const).map((s) => (
               <button
                 key={s}
@@ -448,7 +448,7 @@ function MarkAttendanceModal({
                     ? s === "present"
                       ? "bg-emerald-600 text-white"
                       : "bg-red-600 text-white"
-                    : "text-slate-400 hover:text-slate-200"
+                    : "text-muted hover:text-foreground"
                 }`}
               >
                 {s === "present" ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
@@ -457,7 +457,7 @@ function MarkAttendanceModal({
             ))}
           </div>
         </Field>
-        {error && <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>}
+        {error && <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-600 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">{error}</p>}
         <SubmitButton busy={busy} label="Save attendance" />
       </form>
     </ModalShell>
@@ -515,14 +515,14 @@ function CreateAssessmentModal({
     <ModalShell title="Create Assignment / Test" onClose={onClose}>
       <form onSubmit={submit} className="space-y-4">
         <Field label="Type">
-          <div className="grid grid-cols-2 gap-1 rounded-lg bg-slate-800/70 p-1">
+          <div className="grid grid-cols-2 gap-1 rounded-lg bg-input p-1">
             {(["assignment", "test"] as const).map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setType(t)}
                 className={`rounded-md py-2 text-sm font-medium capitalize transition ${
-                  type === t ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-slate-200"
+                  type === t ? "bg-indigo-600 text-white" : "text-muted hover:text-foreground"
                 }`}
               >
                 {t}
@@ -560,7 +560,7 @@ function CreateAssessmentModal({
             <textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What should students submit?" className={inputCls} />
           </Field>
         )}
-        {error && <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>}
+        {error && <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-600 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">{error}</p>}
         <SubmitButton busy={busy} label={type === "test" ? "Create test" : "Create assignment"} />
       </form>
     </ModalShell>
@@ -596,12 +596,12 @@ function StatCard({
   value: number;
 }) {
   return (
-    <div className="rounded-2xl border border-white/5 bg-slate-900/50 p-5 transition hover:border-indigo-500/30">
+    <div className="rounded-2xl border border-border bg-surface p-5 transition hover:border-indigo-500/30">
       <div className="flex items-start justify-between">
-        <p className="text-xs font-medium tracking-wide text-slate-500 uppercase">{label}</p>
+        <p className="text-xs font-medium tracking-wide text-faint uppercase">{label}</p>
         <span className={`rounded-lg bg-gradient-to-br p-2 ${tint}`}>{icon}</span>
       </div>
-      <p className="mt-3 text-2xl font-bold text-white">{value}</p>
+      <p className="mt-3 text-2xl font-bold text-foreground">{value}</p>
     </div>
   );
 }
@@ -620,14 +620,14 @@ function ActionCard({
   return (
     <button
       onClick={onClick}
-      className="group flex items-center gap-4 rounded-2xl border border-white/5 bg-slate-900/50 p-5 text-left transition hover:border-indigo-500/40 hover:bg-slate-900/80"
+      className="group flex items-center gap-4 rounded-2xl border border-border bg-surface p-5 text-left transition hover:border-indigo-500/40 hover:bg-surface"
     >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/25 to-purple-500/15 text-indigo-300 transition group-hover:scale-105">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300 transition group-hover:scale-105">
         {icon}
       </span>
       <span className="min-w-0">
-        <span className="block text-sm font-semibold text-white">{title}</span>
-        <span className="mt-0.5 block truncate text-xs text-slate-500">{desc}</span>
+        <span className="block text-sm font-semibold text-foreground">{title}</span>
+        <span className="mt-0.5 block truncate text-xs text-faint">{desc}</span>
       </span>
     </button>
   );
@@ -638,12 +638,12 @@ function SkeletonGrid() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-28 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40" />
+          <div key={i} className="h-28 animate-pulse rounded-2xl border border-border bg-surface-2" />
         ))}
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="h-72 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40 lg:col-span-3" />
-        <div className="h-72 animate-pulse rounded-2xl border border-white/5 bg-slate-900/40 lg:col-span-2" />
+        <div className="h-72 animate-pulse rounded-2xl border border-border bg-surface-2 lg:col-span-3" />
+        <div className="h-72 animate-pulse rounded-2xl border border-border bg-surface-2 lg:col-span-2" />
       </div>
     </div>
   );

@@ -48,48 +48,48 @@ export default function LoginPage() {
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/30">
             <BrainCircuit className="h-7 w-7 text-white" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">ATOOL</h1>
-          <p className="mt-1 text-sm text-slate-400">Your AI-powered campus operating system</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">ATOOL</h1>
+          <p className="mt-1 text-sm text-muted">Your AI-powered campus operating system</p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-8 shadow-2xl shadow-black/40 backdrop-blur">
-          <h2 className="mb-1 text-lg font-semibold text-white">Sign in</h2>
-          <p className="mb-5 text-xs text-slate-500">Students and faculty use the same login — your dashboard adapts to your role.</p>
+        <div className="rounded-2xl border border-border bg-surface/90 p-8 shadow-xl shadow-accent/10 backdrop-blur">
+          <h2 className="mb-1 text-lg font-semibold text-foreground">Sign in</h2>
+          <p className="mb-5 text-xs text-faint">Students and faculty use the same login — your dashboard adapts to your role.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-400">Email</label>
+              <label className="mb-1.5 block text-xs font-medium text-muted">Email</label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@atool.edu"
-                  className="w-full rounded-lg border border-white/10 bg-slate-800/70 py-2.5 pl-10 pr-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30"
+                  className="w-full rounded-lg border border-border bg-input py-2.5 pl-10 pr-3 text-sm text-foreground placeholder-faint outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-400">Password</label>
+              <label className="mb-1.5 block text-xs font-medium text-muted">Password</label>
               <div className="relative">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-white/10 bg-slate-800/70 py-2.5 pl-10 pr-10 text-sm text-white placeholder-slate-500 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30"
+                  className="w-full rounded-lg border border-border bg-input py-2.5 pl-10 pr-10 text-sm text-foreground placeholder-faint outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-500 transition hover:text-slate-300"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-faint transition hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -97,7 +97,7 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">{error}</p>
+              <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-600 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">{error}</p>
             )}
 
             <button
@@ -114,8 +114,8 @@ export default function LoginPage() {
           </form>
 
           {/* Quick login buttons */}
-          <div className="mt-6 border-t border-white/5 pt-5">
-            <p className="mb-3 text-center text-[11px] font-medium tracking-wide text-slate-500 uppercase">
+          <div className="mt-6 border-t border-border pt-5">
+            <p className="mb-3 text-center text-[11px] font-medium tracking-wide text-faint uppercase">
               Demo accounts
             </p>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -136,8 +136,8 @@ export default function LoginPage() {
                 <UserRound className="h-4 w-4" /> Demo Faculty
               </button>
             </div>
-            <p className="mt-3 text-center text-[11px] text-slate-600">
-              student@atool.edu · faculty@atool.edu — password: <span className="text-slate-400">password123</span>
+            <p className="mt-3 text-center text-[11px] text-faint/80">
+              student@atool.edu · faculty@atool.edu — password: <span className="text-muted">password123</span>
             </p>
           </div>
         </div>

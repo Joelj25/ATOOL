@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Bot, Send, Sparkles, X } from "lucide-react";
-import { sendChat } from "@/lib/api";
+import { sendChat, type ChatHistoryItem } from "@/lib/api";
+import { getUser } from "@/lib/auth";
 
 /**
  * UI wrapper for the AI Chat Assistant.
@@ -11,10 +12,11 @@ import { sendChat } from "@/lib/api";
 export default function AiChatWidget() {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState("");
+  const firstName = (typeof window === "undefined" ? null : getUser())?.name?.split(" ")[0];
   const [messages, setMessages] = useState<{ role: "user" | "ai"; text: string }[]>([
     {
       role: "ai",
-      text: "Hi Arjun! I'm your ATOOL assistant. Ask me about attendance, your timetable, or campus life.",
+      text: `Hi ${firstName ?? "there"}! I'm your ATOOL Campus AI. Ask me about your attendance or timetable — I check real campus records before answering.`,
     },
   ]);
 
@@ -24,11 +26,14 @@ export default function AiChatWidget() {
     e.preventDefault();
     const text = draft.trim();
     if (!text || loading) return;
+    const history: ChatHistoryItem[] = messages
+      .slice(-8)
+      .map((m) => ({ role: m.role === "ai" ? ("assistant" as const) : ("user" as const), content: m.text }));
     setMessages((m) => [...m, { role: "user", text }]);
     setDraft("");
     setLoading(true);
     try {
-      const res = await sendChat(text);
+      const res = await sendChat(text, history);
       setMessages((m) => [...m, { role: "ai", text: res.reply }]);
     } catch {
       setMessages((m) => [
@@ -43,19 +48,19 @@ export default function AiChatWidget() {
   return (
     <div className="fixed right-6 bottom-6 z-50">
       {open && (
-        <div className="mb-4 flex h-[26rem] w-80 flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-900/95 shadow-2xl shadow-black/50 backdrop-blur">
+        <div className="mb-4 flex h-[26rem] w-80 flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl shadow-accent/10 backdrop-blur">
           {/* Header */}
-          <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3">
+          <div className="flex items-center gap-2.5 border-b border-border px-4 py-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
               <Bot className="h-4 w-4 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-white">ATOOL Assistant</p>
-              <p className="flex items-center gap-1 text-[10px] text-emerald-400">
+              <p className="text-sm font-semibold text-foreground">ATOOL Assistant</p>
+              <p className="flex items-center gap-1 text-[10px] text-success">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> AI-powered
               </p>
             </div>
-            <button onClick={() => setOpen(false)} className="text-slate-500 transition hover:text-slate-300">
+            <button onClick={() => setOpen(false)} className="text-faint transition hover:text-foreground">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -65,25 +70,34 @@ export default function AiChatWidget() {
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
+                  className={                  `max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed ${
                     m.role === "user"
                       ? "bg-indigo-600 text-white"
-                      : "bg-slate-800 text-slate-300 ring-1 ring-white/5"
+                      : "bg-surface-2 text-foreground ring-1 ring-border"
                   }`}
                 >
                   {m.text}
                 </div>
               </div>
             ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="flex items-center gap-1.5 rounded-xl bg-surface-2 px-3 py-2 ring-1 ring-border">
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent [animation-delay:0ms]" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent [animation-delay:150ms]" />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent [animation-delay:300ms]" />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-white/10 p-3">
+          <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-border p-3">
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Ask anything…"
-              className="flex-1 rounded-lg border border-white/10 bg-slate-800/70 px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-indigo-500"
+              className="flex-1 rounded-lg border border-border bg-input px-3 py-2 text-xs text-foreground placeholder-faint outline-none focus:border-accent"
             />
             <button
               type="submit"

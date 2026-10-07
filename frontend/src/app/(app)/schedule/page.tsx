@@ -31,10 +31,10 @@ export default function SchedulePage() {
   return (
     <div className="mx-auto max-w-6xl">
       <header className="mb-8">
-        <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-white">
-          <CalendarDays className="h-7 w-7 text-indigo-400" /> Schedule
+        <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-foreground">
+          <CalendarDays className="h-7 w-7 text-indigo-600 dark:text-indigo-400" /> Schedule
         </h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-muted">
           {role === "faculty" ? "Upcoming deadlines across your courses." : "Your classes for the week ahead."}
         </p>
       </header>
@@ -47,21 +47,21 @@ export default function SchedulePage() {
 
       {role === "faculty"
         ? deadlines.map((u, i) => (
-            <div key={i} className="mb-2.5 flex max-w-3xl items-center justify-between rounded-xl border border-white/5 bg-slate-900/50 p-4">
+            <div key={i} className="mb-2.5 flex max-w-3xl items-center justify-between rounded-xl border border-border bg-surface p-4">
               <div>
-                <p className="text-sm font-medium text-white">{u.title}</p>
-                <p className="text-[11px] capitalize text-slate-500">{u.kind} · {u.course_code}</p>
+                <p className="text-sm font-medium text-foreground">{u.title}</p>
+                <p className="text-[11px] capitalize text-faint">{u.kind} · {u.course_code}</p>
               </div>
-              <span className="rounded-lg bg-amber-500/10 px-2.5 py-1 text-[11px] font-semibold text-amber-400">
+              <span className="rounded-lg bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">
                 {fmtDateFac(u.date)}
               </span>
             </div>
           ))
         : slots?.map((s, i) => (
-            <div key={i} className="mb-2.5 flex max-w-3xl items-center justify-between rounded-xl border border-white/5 bg-slate-900/50 p-4">
+            <div key={i} className="mb-2.5 flex max-w-3xl items-center justify-between rounded-xl border border-border bg-surface p-4">
               <div>
-                <p className="text-sm font-medium text-white">{s.course_name}</p>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-sm font-medium text-foreground">{s.course_name}</p>
+                <p className="text-[11px] text-faint">
                   {s.course_code} · {s.room} · {s.faculty}
                 </p>
               </div>
